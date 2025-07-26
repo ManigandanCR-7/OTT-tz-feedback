@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rate OTT'tz – Theatre on Desk</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      height: 100vh;
+      background: #0f0f0f;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+    .feedback-slide {
+      background: linear-gradient(145deg, #111111, #1c1c1c);
+      box-shadow: 0 0 30px rgba(255, 77, 166, 0.2);
+      border-radius: 20px;
+      padding: 40px;
+      width: 420px;
+      max-width: 90%;
+      text-align: center;
+    }
+    .feedback-slide h2 {
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      color: #ff4da6;
+      letter-spacing: 1px;
+    }
+    .stars {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+    .star {
+      font-size: 2.2rem;
+      color: #444;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .star.selected {
+      color: #ff4da6;
+      transform: scale(1.2);
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      border-radius: 10px;
+      border: none;
+      padding: 15px;
+      background: #1a1a1a;
+      color: white;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      resize: none;
+      outline: none;
+    }
+    button {
+      background: #ff4da6;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #e03b92;
+    }
+  </style>
+</head>
+<body>
+  <div class="feedback-slide">
+    <h2>⭐ Rate OTT'tz – Help Us Improve</h2>
+    <div class="stars" id="star-container">
+      <span class="star" data-value="1">★</span>
+      <span class="star" data-value="2">★</span>
+      <span class="star" data-value="3">★</span>
+      <span class="star" data-value="4">★</span>
+      <span class="star" data-value="5">★</span>
+    </div>
+    <textarea id="feedback" placeholder="Tell us what you loved or what we can do better..."></textarea>
+    <button onclick="submitFeedback()">Submit</button>
+  </div>
+
+  <script>
+    const stars = document.querySelectorAll('.star');
+    let selectedRating = 0;
+
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        selectedRating = parseInt(star.dataset.value);
+        stars.forEach(s => s.classList.remove('selected'));
+        for (let i = 0; i < selectedRating; i++) {
+          stars[i].classList.add('selected');
+        }
+      });
+    });
+
+    function submitFeedback() {
+      const feedback = document.getElementById('feedback').value;
+
+      if (!selectedRating || feedback.trim() === "") {
+        alert("Please provide a rating and some feedback.");
+        return;
+      }
+
+      // Submit to your backend or service (replace the URL below)
+      fetch('https://your-backend.com/submit-feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rating: selectedRating, message: feedback })
+      }).then(() => {
+        alert("Thanks for your feedback!");
+        document.getElementById('feedback').value = '';
+        stars.forEach(s => s.classList.remove('selected'));
+        selectedRating = 0;
+      });
+    }
+  </script>
+</body>
+</html>
