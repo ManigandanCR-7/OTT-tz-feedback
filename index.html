@@ -9,21 +9,63 @@
       padding: 0;
       box-sizing: border-box;
     }
-    body {
-      height: 100vh;
-      background: #0f0f0f;
+
+    html, body {
+      height: 100%;
+      width: 100%;
       font-family: 'Segoe UI', sans-serif;
+      background: #000;
+      overflow: hidden;
+    }
+
+    /* Background video */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Centered content */
+    .content-container {
+      position: relative;
+      z-index: 2;
+      height: 100%;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: #fff;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.4); /* slight tint */
     }
+
+    .title {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0, 168, 232, 0.5);
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(3px);
+      border-radius: 10px;
+      padding: 10px 20px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
     .feedback-slide {
       background: linear-gradient(145deg, #111111, #1a1a1a);
       box-shadow:
         0 30px 60px rgba(0, 168, 232, 0.3),
-        0 10px 30px rgba(0, 168, 232, 0.4),
-        inset 0 0 0 rgba(255, 255, 255, 0.1);
+        0 10px 30px rgba(0, 168, 232, 0.4);
       border-radius: 20px;
       padding: 40px;
       width: 450px;
@@ -31,32 +73,30 @@
       text-align: center;
       transition: transform 0.3s ease;
     }
+
     .feedback-slide:hover {
       transform: scale(1.015);
     }
-    .feedback-slide h2 {
-      font-size: 1.8rem;
-      margin-bottom: 25px;
-      color: #00bfff;
-      letter-spacing: 1px;
-      text-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
-    }
+
     .stars {
       display: flex;
       justify-content: center;
       margin-bottom: 25px;
     }
+
     .star {
       font-size: 2.4rem;
       color: #333;
       cursor: pointer;
       transition: transform 0.3s, color 0.3s;
     }
+
     .star.selected {
       color: #00bfff;
       transform: scale(1.2);
       text-shadow: 0 0 8px rgba(0, 191, 255, 0.6);
     }
+
     textarea {
       width: 100%;
       height: 100px;
@@ -71,6 +111,7 @@
       outline: none;
       box-shadow: inset 0 0 10px rgba(0, 191, 255, 0.1);
     }
+
     button {
       background: #00bfff;
       border: none;
@@ -83,6 +124,7 @@
       transition: background 0.3s, transform 0.2s ease;
       box-shadow: 0 5px 20px rgba(0, 191, 255, 0.3);
     }
+
     button:hover {
       background: #009cd3;
       transform: scale(1.05);
@@ -90,19 +132,32 @@
   </style>
 </head>
 <body>
-  <div class="feedback-slide">
-    <h2>⭐ Rate OTT'tz – Help Us Improve</h2>
-    <div class="stars" id="star-container">
-      <span class="star" data-value="1">★</span>
-      <span class="star" data-value="2">★</span>
-      <span class="star" data-value="3">★</span>
-      <span class="star" data-value="4">★</span>
-      <span class="star" data-value="5">★</span>
-    </div>
-    <textarea id="feedback" placeholder="Tell us what you loved or what we can do better..."></textarea>
-    <button onclick="submitFeedback()">Submit</button>
+
+  <!-- 🎥 Background Video -->
+  <div class="video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="https://cdn.coverr.co/videos/coverr-night-lights-6545/1080p.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
   </div>
 
+  <!-- 🔲 Foreground Content -->
+  <div class="content-container">
+    <div class="title">⭐ Rate Your Experience – OTT'tz</div>
+    <div class="feedback-slide">
+      <div class="stars" id="star-container">
+        <span class="star" data-value="1">★</span>
+        <span class="star" data-value="2">★</span>
+        <span class="star" data-value="3">★</span>
+        <span class="star" data-value="4">★</span>
+        <span class="star" data-value="5">★</span>
+      </div>
+      <textarea id="feedback" placeholder="Tell us what you loved or what we can improve..."></textarea>
+      <button onclick="submitFeedback()">Submit</button>
+    </div>
+  </div>
+
+  <!-- 📜 Script -->
   <script>
     const stars = document.querySelectorAll('.star');
     let selectedRating = 0;
@@ -125,7 +180,7 @@
         return;
       }
 
-      // Replace with your backend or submission handler
+      // Replace with your backend endpoint
       fetch('https://your-backend.com/submit-feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
