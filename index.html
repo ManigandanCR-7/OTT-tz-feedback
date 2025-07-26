@@ -1,74 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>OTT'tz Feedback</title>
   <style>
-    body {
+    body, html {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       height: 100vh;
-      background: #0e0e0e;
-    }
-
-    .feedback-container {
-      position: relative;
-      width: 500px;
-      height: 350px;
-      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 0 60px 10px rgba(0, 191, 255, 0.4); /* Ocean blue wide 3D glow */
     }
 
+    /* Background Video Styling */
     .video-bg {
-      position: absolute;
+      position: fixed;
       top: 0; left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
+      z-index: -1;
       object-fit: cover;
-      z-index: 1;
-      filter: brightness(0.4) blur(2px);
     }
 
-    .feedback-content {
-      position: relative;
-      z-index: 2;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      color: white;
+    /* 3D Slide */
+    .rating-slide {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 450px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 20px 60px rgba(0, 123, 255, 0.6); /* Ocean Blue Glow */
+      border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 30px;
-      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      color: #fff;
     }
 
     .title {
-      font-size: 1.8rem;
+      font-size: 26px;
       font-weight: 600;
+      letter-spacing: 0.5px;
+      background: linear-gradient(to right, #00bfff, #0077ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
       text-align: center;
-      color: #ffffff;
-      text-shadow: 0 0 5px rgba(0,191,255, 0.8);
     }
 
     .stars {
       display: flex;
       justify-content: center;
-      gap: 10px;
-      margin: 20px 0;
+      margin-bottom: 20px;
     }
 
-    .stars input {
+    .stars input[type="radio"] {
       display: none;
     }
 
     .stars label {
-      font-size: 2rem;
-      color: #999;
+      font-size: 40px;
+      color: #555;
       cursor: pointer;
       transition: 0.3s;
     }
@@ -76,60 +73,67 @@
     .stars input:checked ~ label,
     .stars label:hover,
     .stars label:hover ~ label {
-      color: #00bfff; /* Ocean blue stars */
+      color: #00bfff;
     }
 
     textarea {
+      width: 100%;
+      height: 150px;
+      padding: 15px;
+      border-radius: 10px;
+      border: none;
       resize: none;
-      height: 80px;
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      font-size: 1rem;
-      background: rgba(255,255,255,0.1);
-      color: white;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.07);
+      color: #fff;
+      outline: none;
     }
 
-    button {
+    .submit-btn {
       background-color: #00bfff;
-      border: none;
-      color: white;
+      color: #fff;
       padding: 12px;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: bold;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: all 0.3s ease;
     }
 
-    button:hover {
-      background-color: #009acd;
+    .submit-btn:hover {
+      background-color: #0077ff;
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
 
-  <div class="feedback-container">
-    <video class="video-bg" autoplay loop muted playsinline>
-      <source src="avc_Untitled video - Made with Clipchamp (85).mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+  <!-- Background Video -->
+  <video autoplay muted loop class="video-bg">
+    <source src="avc_Untitled video - Made with Clipchamp (85).mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 
-    <div class="feedback-content">
-      <div class="title">How was your OTT'tz Experience?</div>
-
-      <div class="stars">
-        <input type="radio" name="rate" id="star5"><label for="star5">★</label>
-        <input type="radio" name="rate" id="star4"><label for="star4">★</label>
-        <input type="radio" name="rate" id="star3"><label for="star3">★</label>
-        <input type="radio" name="rate" id="star2"><label for="star2">★</label>
-        <input type="radio" name="rate" id="star1"><label for="star1">★</label>
-      </div>
-
-      <textarea placeholder="Tell us how we can improve..."></textarea>
-
-      <button>Submit Feedback</button>
+  <!-- Rating Slide -->
+  <div class="rating-slide">
+    <div class="title">How Was Your OTT'tz Experience?</div>
+    
+    <!-- Star Rating -->
+    <div class="stars">
+      <input type="radio" id="star5" name="rating" value="5" /><label for="star5">&#9733;</label>
+      <input type="radio" id="star4" name="rating" value="4" /><label for="star4">&#9733;</label>
+      <input type="radio" id="star3" name="rating" value="3" /><label for="star3">&#9733;</label>
+      <input type="radio" id="star2" name="rating" value="2" /><label for="star2">&#9733;</label>
+      <input type="radio" id="star1" name="rating" value="1" /><label for="star1">&#9733;</label>
     </div>
+
+    <!-- Feedback Text -->
+    <textarea placeholder="Share your thoughts..."></textarea>
+
+    <!-- Submit Button -->
+    <button class="submit-btn">Submit Feedback</button>
   </div>
 
 </body>
