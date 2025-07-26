@@ -2,196 +2,135 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Rate OTT'tz – Theatre on Desk</title>
+  <title>OTT'tz Feedback</title>
   <style>
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      height: 100%;
-      width: 100%;
       font-family: 'Segoe UI', sans-serif;
-      background: #000;
-      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #0e0e0e;
     }
 
-    /* Background video */
+    .feedback-container {
+      position: relative;
+      width: 500px;
+      height: 350px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 60px 10px rgba(0, 191, 255, 0.4); /* Ocean blue wide 3D glow */
+    }
+
     .video-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .video-bg video {
+      position: absolute;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      z-index: 1;
+      filter: brightness(0.4) blur(2px);
     }
 
-    /* Centered content */
-    .content-container {
+    .feedback-content {
       position: relative;
       z-index: 2;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      color: white;
+      padding: 30px;
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-      background: rgba(0, 0, 0, 0.4); /* slight tint */
+      justify-content: space-between;
     }
 
     .title {
-      font-size: 2rem;
-      margin-bottom: 30px;
+      font-size: 1.8rem;
       font-weight: 600;
-      color: #fff;
-      text-shadow: 0 0 10px rgba(0, 168, 232, 0.5);
-      letter-spacing: 0.5px;
-      backdrop-filter: blur(3px);
-      border-radius: 10px;
-      padding: 10px 20px;
-      background: rgba(0, 0, 0, 0.2);
-    }
-
-    .feedback-slide {
-      background: linear-gradient(145deg, #111111, #1a1a1a);
-      box-shadow:
-        0 30px 60px rgba(0, 168, 232, 0.3),
-        0 10px 30px rgba(0, 168, 232, 0.4);
-      border-radius: 20px;
-      padding: 40px;
-      width: 450px;
-      max-width: 90%;
       text-align: center;
-      transition: transform 0.3s ease;
-    }
-
-    .feedback-slide:hover {
-      transform: scale(1.015);
+      color: #ffffff;
+      text-shadow: 0 0 5px rgba(0,191,255, 0.8);
     }
 
     .stars {
       display: flex;
       justify-content: center;
-      margin-bottom: 25px;
+      gap: 10px;
+      margin: 20px 0;
     }
 
-    .star {
-      font-size: 2.4rem;
-      color: #333;
+    .stars input {
+      display: none;
+    }
+
+    .stars label {
+      font-size: 2rem;
+      color: #999;
       cursor: pointer;
-      transition: transform 0.3s, color 0.3s;
+      transition: 0.3s;
     }
 
-    .star.selected {
-      color: #00bfff;
-      transform: scale(1.2);
-      text-shadow: 0 0 8px rgba(0, 191, 255, 0.6);
+    .stars input:checked ~ label,
+    .stars label:hover,
+    .stars label:hover ~ label {
+      color: #00bfff; /* Ocean blue stars */
     }
 
     textarea {
-      width: 100%;
-      height: 100px;
+      resize: none;
+      height: 80px;
+      padding: 10px;
       border-radius: 10px;
       border: none;
-      padding: 15px;
-      background: #1a1a1a;
-      color: white;
       font-size: 1rem;
-      margin-bottom: 20px;
-      resize: none;
-      outline: none;
-      box-shadow: inset 0 0 10px rgba(0, 191, 255, 0.1);
+      background: rgba(255,255,255,0.1);
+      color: white;
     }
 
     button {
-      background: #00bfff;
+      background-color: #00bfff;
       border: none;
-      padding: 12px 24px;
-      border-radius: 10px;
       color: white;
-      font-weight: bold;
+      padding: 12px;
+      border-radius: 10px;
       font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s, transform 0.2s ease;
-      box-shadow: 0 5px 20px rgba(0, 191, 255, 0.3);
+      transition: background 0.3s;
     }
 
     button:hover {
-      background: #009cd3;
-      transform: scale(1.05);
+      background-color: #009acd;
     }
   </style>
 </head>
 <body>
 
-  <!-- 🎥 Background Video -->
-  <div class="video-bg"> 
-    <video autoplay muted loop playsinline>
-      <source src="avc_Untitled video - Made with Clipchamp (85).mp4" type="video/mp4">
-      Your browser does not support HTML5 video.
+  <div class="feedback-container">
+    <video class="video-bg" autoplay loop muted playsinline>
+      <source src="avc_Untitled video - Made with Clipchamp (85).mp4" type="video/mp4" />
+      Your browser does not support the video tag.
     </video>
-  </div>
 
-  <!-- 🔲 Foreground Content -->
-  <div class="content-container">
-    <div class="title">⭐ Rate Your Experience – OTT'tz</div>
-    <div class="feedback-slide">
-      <div class="stars" id="star-container">
-        <span class="star" data-value="1">★</span>
-        <span class="star" data-value="2">★</span>
-        <span class="star" data-value="3">★</span>
-        <span class="star" data-value="4">★</span>
-        <span class="star" data-value="5">★</span>
+    <div class="feedback-content">
+      <div class="title">How was your OTT'tz Experience?</div>
+
+      <div class="stars">
+        <input type="radio" name="rate" id="star5"><label for="star5">★</label>
+        <input type="radio" name="rate" id="star4"><label for="star4">★</label>
+        <input type="radio" name="rate" id="star3"><label for="star3">★</label>
+        <input type="radio" name="rate" id="star2"><label for="star2">★</label>
+        <input type="radio" name="rate" id="star1"><label for="star1">★</label>
       </div>
-      <textarea id="feedback" placeholder="Tell us what you loved or what we can improve..."></textarea>
-      <button onclick="submitFeedback()">Submit</button>
+
+      <textarea placeholder="Tell us how we can improve..."></textarea>
+
+      <button>Submit Feedback</button>
     </div>
   </div>
 
-  <!-- 📜 Script -->
-  <script>
-    const stars = document.querySelectorAll('.star');
-    let selectedRating = 0;
-
-    stars.forEach(star => {
-      star.addEventListener('click', () => {
-        selectedRating = parseInt(star.dataset.value);
-        stars.forEach(s => s.classList.remove('selected'));
-        for (let i = 0; i < selectedRating; i++) {
-          stars[i].classList.add('selected');
-        }
-      });
-    });
-
-    function submitFeedback() {
-      const feedback = document.getElementById('feedback').value;
-
-      if (!selectedRating || feedback.trim() === "") {
-        alert("Please provide a rating and some feedback.");
-        return;
-      }
-
-      // Replace with your backend endpoint
-      fetch('https://your-backend.com/submit-feedback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ rating: selectedRating, message: feedback })
-      }).then(() => {
-        alert("🌊 Thanks for your feedback!");
-        document.getElementById('feedback').value = '';
-        stars.forEach(s => s.classList.remove('selected'));
-        selectedRating = 0;
-      });
-    }
-  </script>
 </body>
 </html>
