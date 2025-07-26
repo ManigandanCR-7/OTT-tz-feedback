@@ -19,19 +19,27 @@
       color: #fff;
     }
     .feedback-slide {
-      background: linear-gradient(145deg, #111111, #1c1c1c);
-      box-shadow: 0 0 30px rgba(255, 77, 166, 0.2);
+      background: linear-gradient(145deg, #111111, #1a1a1a);
+      box-shadow:
+        0 30px 60px rgba(0, 168, 232, 0.3),
+        0 10px 30px rgba(0, 168, 232, 0.4),
+        inset 0 0 0 rgba(255, 255, 255, 0.1);
       border-radius: 20px;
       padding: 40px;
-      width: 420px;
+      width: 450px;
       max-width: 90%;
       text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .feedback-slide:hover {
+      transform: scale(1.015);
     }
     .feedback-slide h2 {
       font-size: 1.8rem;
       margin-bottom: 25px;
-      color: #ff4da6;
+      color: #00bfff;
       letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
     }
     .stars {
       display: flex;
@@ -39,14 +47,15 @@
       margin-bottom: 25px;
     }
     .star {
-      font-size: 2.2rem;
-      color: #444;
+      font-size: 2.4rem;
+      color: #333;
       cursor: pointer;
-      transition: 0.3s;
+      transition: transform 0.3s, color 0.3s;
     }
     .star.selected {
-      color: #ff4da6;
+      color: #00bfff;
       transform: scale(1.2);
+      text-shadow: 0 0 8px rgba(0, 191, 255, 0.6);
     }
     textarea {
       width: 100%;
@@ -60,9 +69,10 @@
       margin-bottom: 20px;
       resize: none;
       outline: none;
+      box-shadow: inset 0 0 10px rgba(0, 191, 255, 0.1);
     }
     button {
-      background: #ff4da6;
+      background: #00bfff;
       border: none;
       padding: 12px 24px;
       border-radius: 10px;
@@ -70,10 +80,12 @@
       font-weight: bold;
       font-size: 1rem;
       cursor: pointer;
-      transition: 0.3s;
+      transition: background 0.3s, transform 0.2s ease;
+      box-shadow: 0 5px 20px rgba(0, 191, 255, 0.3);
     }
     button:hover {
-      background: #e03b92;
+      background: #009cd3;
+      transform: scale(1.05);
     }
   </style>
 </head>
@@ -113,13 +125,13 @@
         return;
       }
 
-      // Submit to your backend or service (replace the URL below)
+      // Replace with your backend or submission handler
       fetch('https://your-backend.com/submit-feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ rating: selectedRating, message: feedback })
       }).then(() => {
-        alert("Thanks for your feedback!");
+        alert("🌊 Thanks for your feedback!");
         document.getElementById('feedback').value = '';
         stars.forEach(s => s.classList.remove('selected'));
         selectedRating = 0;
